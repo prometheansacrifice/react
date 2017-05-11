@@ -559,13 +559,17 @@ var ReactDOM = {
 };
 
 if (typeof injectInternals === 'function') {
-  injectInternals({
-    findFiberByHostInstance: ReactDOMComponentTree.getClosestInstanceFromNode,
-    findHostInstanceByFiber: DOMRenderer.findHostInstance,
-    // This is an enum because we may add more (e.g. profiler build)
-    bundleType: __DEV__ ? 1 : 0,
-    version: ReactVersion,
-  });
+  // This is an enum because we may add more (e.g. profiler build)
+  var bundleType = __DEV__ ? 1 : 0;
+  var findFiberByHostInstance =
+    ReactDOMComponentTree.getClosestInstanceFromNode;
+  var findHostInstanceByFiber = DOMRenderer.findHostInstance;
+  injectInternals(
+    findFiberByHostInstance,
+    findHostInstanceByFiber,
+    bundleType,
+    ReactVersion,
+  );
 }
 
 module.exports = ReactDOM;

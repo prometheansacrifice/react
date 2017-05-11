@@ -462,13 +462,17 @@ const ReactNative = {
 };
 
 if (typeof injectInternals === 'function') {
-  injectInternals({
-    findFiberByHostInstance: ReactNativeComponentTree.getClosestInstanceFromNode,
-    findHostInstanceByFiber: NativeRenderer.findHostInstance,
-    // This is an enum because we may add more (e.g. profiler build)
-    bundleType: __DEV__ ? 1 : 0,
-    version: ReactVersion,
-  });
+  // This is an enum because we may add more (e.g. profiler build)
+  var bundleType = __DEV__ ? 1 : 0;
+  var findFiberByHostInstance =
+    ReactNativeComponentTree.getClosestInstanceFromNode;
+  var findHostInstanceByFiber = NativeRenderer.findHostInstance;
+  injectInternals(
+    findFiberByHostInstance,
+    findHostInstanceByFiber,
+    bundleType,
+    ReactVersion,
+  );
 }
 
 module.exports = ReactNative;

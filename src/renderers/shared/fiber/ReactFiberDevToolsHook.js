@@ -33,9 +33,35 @@ if (
     onCommitFiberUnmount,
   } = __REACT_DEVTOOLS_GLOBAL_HOOK__;
 
-  injectInternals = function(internals: Object) {
+  injectInternals = function(
+    findFiberByHostInstance: (instance: any) => Fiber,
+    findHostInstanceByFiber: (component: Fiber) => any,
+    bundleType: number,
+    version: string,
+  ) {
     warning(rendererID == null, 'Cannot inject into DevTools twice.');
-    rendererID = inject(internals);
+    // A dummy function to check for minification during runtime
+    // Refer https://github.com/facebook/react-devtools/issues/694#issuecomment-300535376
+    var testMinification = function() {
+      if (__DEV__) {
+        return 42;
+      }
+    };
+    warning(
+      (testMinification.name || testMinification.toString())
+        .indexOf('testMinification') !== -1,
+      "It looks like you're using a minified copy of the development build " +
+        'of React. When deploying React apps to production, make sure to use ' +
+        'the production build which skips development warnings and is faster. ' +
+        'See https://fb.me/react-minification for more details.',
+    );
+    rendererID = inject({
+      findHostInstanceByFiber: findHostInstanceByFiber,
+      findFiberByHostInstance: findFiberByHostInstance,
+      bundleType: bundleType,
+      version: version,
+      testMinification: testMinification,
+    });
   };
 
   onCommitRoot = function(root: FiberRoot) {
