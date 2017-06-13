@@ -42,6 +42,14 @@ if (
         return 42;
       }
     };
+    warning(
+      (testMinification.name || testMinification.toString())
+        .indexOf('testMinification') !== -1,
+      "It looks like you're using a minified copy of the development build " +
+        'of React. When deploying React apps to production, make sure to use ' +
+        'the production build which skips development warnings and is faster. ' +
+        'See https://fb.me/react-minification for more details.',
+    );
     rendererID = inject(Object.assign({}, internals, {testMinification}));
   };
 
