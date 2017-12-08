@@ -1276,7 +1276,7 @@ const ReactDOM: Object = {
   },
 
   // Temporary alias since we already shipped React 16 RC with it.
-  // TODO: remove in React 17.
+  // TODO: remove in React 17...
   unstable_createPortal(...args) {
     if (!didWarnAboutUnstableCreatePortal) {
       didWarnAboutUnstableCreatePortal = true;
