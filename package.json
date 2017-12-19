@@ -111,6 +111,7 @@
     "test-prod-build": "yarn test-build-prod",
     "test-build": "cross-env NODE_ENV=development jest --config ./scripts/jest/config.build.js",
     "test-build-prod": "cross-env NODE_ENV=production jest --config ./scripts/jest/config.build.js",
+    "test-rdl": "cross-env NODE_ENV=development jest --config ./scripts/jest/config.rdl.js",
     "flow": "node ./scripts/tasks/flow.js",
     "prettier": "node ./scripts/prettier/index.js write-changed",
     "prettier-all": "node ./scripts/prettier/index.js write",
